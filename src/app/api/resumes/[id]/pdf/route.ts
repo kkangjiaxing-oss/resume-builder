@@ -62,7 +62,12 @@ export async function GET(_request: NextRequest, context: RouteContext) {
         "Content-Disposition": 'attachment; filename="resume.pdf"',
       },
     });
-  } catch {
+  } catch (error) {
+    console.error("PDF export failed", {
+      resumeId: id,
+      error: error instanceof Error ? error.message : String(error),
+    });
+
     return errorResponse("PDF_EXPORT_FAILED", "\u5bfc\u51fa PDF \u5931\u8d25\uff0c\u8bf7\u7a0d\u540e\u91cd\u8bd5\u3002", 500);
   }
 }
