@@ -1,16 +1,24 @@
 import TemplateRenderer from "@/components/resume/TemplateRenderer";
 import type { Resume } from "@/types/resume";
-import chromium from "@sparticuz/chromium-min";
+import chromium from "@sparticuz/chromium";
 import { existsSync } from "fs";
 import puppeteer, { type Browser } from "puppeteer-core";
 import React from "react";
 import { renderToReadableStream } from "react-dom/server.edge";
 
+type MaybePromise<T> = T | Promise<T>;
+
 export async function launchBrowser(): Promise<Browser> {
   const executablePath = await getExecutablePath();
+  const isLocal = Boolean(getLocalExecutablePath() || process.env.PUPPETEER_EXECUTABLE_PATH);
+  const localArgs = await Promise.resolve(
+    puppeteer.defaultArgs() as unknown as MaybePromise<string[]>,
+  );
+  const remoteArgs = await Promise.resolve(chromium.args as MaybePromise<string[]>);
+  const browserArgs = isLocal ? localArgs : remoteArgs;
 
   return puppeteer.launch({
-    args: chromium.args,
+    args: browserArgs,
     defaultViewport: {
       width: 1240,
       height: 1754,

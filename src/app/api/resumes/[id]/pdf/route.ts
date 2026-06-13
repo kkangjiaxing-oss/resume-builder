@@ -6,6 +6,7 @@ import type { ResumeRow } from "@/types/database";
 import { NextResponse, type NextRequest } from "next/server";
 
 export const runtime = "nodejs";
+export const maxDuration = 60;
 
 type ApiErrorCode = "UNAUTHORIZED" | "RESUME_NOT_FOUND" | "PDF_EXPORT_FAILED";
 
