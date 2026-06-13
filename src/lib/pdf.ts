@@ -34,7 +34,7 @@ export async function launchBrowser(): Promise<Browser> {
   });
 }
 
-export async function renderResumeHtml(resume: Resume) {
+export async function renderResumeHtml(resume: Resume, baseUrl: string) {
   const resumeStream = await renderToReadableStream(
     React.createElement(TemplateRenderer, {
       title: resume.title,
@@ -49,6 +49,7 @@ export async function renderResumeHtml(resume: Resume) {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="${baseUrl}/fonts/noto-sans-sc/pdf.css" />
     <style>${pdfStyles}</style>
   </head>
   <body>
@@ -57,14 +58,15 @@ export async function renderResumeHtml(resume: Resume) {
 </html>`;
 }
 
-export async function generateResumePdf(resume: Resume) {
+export async function generateResumePdf(resume: Resume, baseUrl: string) {
   const browser = await launchBrowser();
 
   try {
     const page = await browser.newPage();
-    await page.setContent(await renderResumeHtml(resume), {
+    await page.setContent(await renderResumeHtml(resume, baseUrl), {
       waitUntil: "load",
     });
+    await page.evaluate(() => document.fonts.ready);
 
     return await page.pdf({
       format: "A4",
