@@ -14,7 +14,12 @@ export async function launchBrowser(): Promise<Browser> {
   const localArgs = await Promise.resolve(
     puppeteer.defaultArgs() as unknown as MaybePromise<string[]>,
   );
-  const remoteArgs = await Promise.resolve(chromium.args as MaybePromise<string[]>);
+  const remoteArgs = await Promise.resolve(
+    puppeteer.defaultArgs({
+      args: chromium.args,
+      headless: "shell",
+    }) as unknown as MaybePromise<string[]>,
+  );
   const browserArgs = isLocal ? localArgs : remoteArgs;
 
   return puppeteer.launch({
@@ -25,7 +30,7 @@ export async function launchBrowser(): Promise<Browser> {
       deviceScaleFactor: 1,
     },
     executablePath,
-    headless: true,
+    headless: isLocal ? true : "shell",
   });
 }
 
