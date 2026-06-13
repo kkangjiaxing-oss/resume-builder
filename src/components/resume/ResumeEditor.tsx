@@ -5,7 +5,6 @@ import ResumePreview from "@/components/resume/ResumePreview";
 import type { ApiResponse } from "@/types/api";
 import type { EducationItem, ExperienceItem, Resume, ResumeContent } from "@/types/resume";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 
 type ResumeEditorProps = {
@@ -23,7 +22,7 @@ const copy = {
   saving: "\u4fdd\u5b58\u4e2d...",
   exportPdf: "\u5bfc\u51fa PDF",
   exporting: "\u6b63\u5728\u4fdd\u5b58...",
-  exportHint: "\u5bfc\u51fa\u524d\u4f1a\u81ea\u52a8\u4fdd\u5b58\u5f53\u524d\u5185\u5bb9\u3002",
+  exportHint: "\u5bfc\u51fa\u524d\u4f1a\u81ea\u52a8\u4fdd\u5b58\u5f53\u524d\u5185\u5bb9\uff0c\u7136\u540e\u76f4\u63a5\u4e0b\u8f7d PDF\u3002",
   saveSuccess: "\u4fdd\u5b58\u6210\u529f",
   saveError: "\u4fdd\u5b58\u5931\u8d25\uff0c\u8bf7\u7a0d\u540e\u91cd\u8bd5",
   confirmRemoveExperience: "\u786e\u5b9a\u5220\u9664\u8fd9\u6bb5\u5de5\u4f5c\u7ecf\u5386\u5417\uff1f",
@@ -53,7 +52,6 @@ const copy = {
 };
 
 export default function ResumeEditor({ resume }: ResumeEditorProps) {
-  const router = useRouter();
   const [title, setTitle] = useState(resume.title);
   const [content, setContent] = useState<ResumeContent>(() => normalizeContent(resume.content));
   const [isSaving, setIsSaving] = useState(false);
@@ -111,7 +109,7 @@ export default function ResumeEditor({ resume }: ResumeEditorProps) {
       const saved = await saveResume();
 
       if (saved) {
-        router.push(`/resumes/${resume.id}/print`);
+        window.location.href = `/api/resumes/${resume.id}/pdf`;
       }
     } finally {
       setIsExporting(false);

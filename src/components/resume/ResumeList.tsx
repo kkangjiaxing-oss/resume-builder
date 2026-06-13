@@ -1,6 +1,7 @@
 import { getResumeTemplate } from "@/lib/templates";
 import type { ResumeListItem } from "@/types/resume";
 import Link from "next/link";
+import PdfDownloadButton from "./PdfDownloadButton";
 
 type ResumeListProps = {
   resumes: ResumeListItem[];
@@ -13,6 +14,7 @@ const copy = {
   template: "\u6a21\u677f",
   updatedAt: "\u6700\u540e\u66f4\u65b0",
   edit: "\u7f16\u8f91",
+  exportPdf: "\u5bfc\u51fa PDF",
 };
 
 export default function ResumeList({ resumes }: ResumeListProps) {
@@ -54,12 +56,20 @@ export default function ResumeList({ resumes }: ResumeListProps) {
                   </span>
                 </div>
               </div>
-              <Link
-                href={`/resumes/${resume.id}/edit`}
-                className="shrink-0 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
-              >
-                {copy.edit}
-              </Link>
+              <div className="flex shrink-0 items-center gap-2">
+                <PdfDownloadButton
+                  resumeId={resume.id}
+                  className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                >
+                  {copy.exportPdf}
+                </PdfDownloadButton>
+                <Link
+                  href={`/resumes/${resume.id}/edit`}
+                  className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                >
+                  {copy.edit}
+                </Link>
+              </div>
             </div>
           );
         })}

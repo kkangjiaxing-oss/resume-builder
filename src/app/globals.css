@@ -17,42 +17,7 @@ body {
   color: var(--foreground);
 }
 
-.print-page {
-  width: 210mm;
-  min-height: 297mm;
-}
-
-.print-page > .resume-template {
-  min-height: 297mm;
-}
-
 .resume-entry {
   break-inside: avoid;
   page-break-inside: avoid;
-}
-
-@page {
-  size: A4;
-  margin: 12mm;
-}
-
-@media print {
-  body {
-    background: white;
-  }
-
-  .print-hidden {
-    display: none !important;
-  }
-
-  .print-page {
-    width: auto;
-    min-height: auto;
-    box-shadow: none !important;
-    overflow: visible !important;
-  }
-
-  .print-page > .resume-template {
-    min-height: auto;
-  }
 }

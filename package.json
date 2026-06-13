@@ -9,10 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@sparticuz/chromium-min": "^149.0.0",
     "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.83.0",
     "next": "15.5.19",
     "openai": "^6.42.0",
+    "puppeteer-core": "^25.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
