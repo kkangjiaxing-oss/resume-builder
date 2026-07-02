@@ -51,10 +51,7 @@ export async function GET(_request: NextRequest, context: RouteContext) {
   }
 
   try {
-    const pdfBuffer = await generateResumePdf(
-      mapResumeRowToResume(data),
-      new URL(_request.url).origin,
-    );
+    const pdfBuffer = await generateResumePdf(mapResumeRowToResume(data));
 
     const body = new ArrayBuffer(pdfBuffer.byteLength);
     new Uint8Array(body).set(pdfBuffer);

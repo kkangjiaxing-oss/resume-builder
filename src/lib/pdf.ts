@@ -1,12 +1,15 @@
 import TemplateRenderer from "@/components/resume/TemplateRenderer";
 import type { Resume } from "@/types/resume";
 import chromium from "@sparticuz/chromium";
-import { existsSync } from "fs";
+import { existsSync, readFileSync } from "fs";
+import path from "path";
 import puppeteer, { type Browser } from "puppeteer-core";
 import React from "react";
 import { renderToReadableStream } from "react-dom/server.edge";
 
 type MaybePromise<T> = T | Promise<T>;
+
+let cachedFontStyles: string | null = null;
 
 export async function launchBrowser(): Promise<Browser> {
   const executablePath = await getExecutablePath();
@@ -34,7 +37,7 @@ export async function launchBrowser(): Promise<Browser> {
   });
 }
 
-export async function renderResumeHtml(resume: Resume, baseUrl: string) {
+export async function renderResumeHtml(resume: Resume) {
   const resumeStream = await renderToReadableStream(
     React.createElement(TemplateRenderer, {
       title: resume.title,
@@ -49,8 +52,7 @@ export async function renderResumeHtml(resume: Resume, baseUrl: string) {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="${baseUrl}/fonts/noto-sans-sc/pdf.css" />
-    <style>${pdfStyles}</style>
+    <style>${getPdfFontStyles()}${pdfStyles}</style>
   </head>
   <body>
     <main class="pdf-page">${resumeMarkup}</main>
@@ -58,12 +60,12 @@ export async function renderResumeHtml(resume: Resume, baseUrl: string) {
 </html>`;
 }
 
-export async function generateResumePdf(resume: Resume, baseUrl: string) {
+export async function generateResumePdf(resume: Resume) {
   const browser = await launchBrowser();
 
   try {
     const page = await browser.newPage();
-    await page.setContent(await renderResumeHtml(resume, baseUrl), {
+    await page.setContent(await renderResumeHtml(resume), {
       waitUntil: "load",
     });
     await page.evaluate(() => document.fonts.ready);
@@ -113,6 +115,28 @@ function getLocalExecutablePath() {
   return candidates.find((candidate) => existsSync(candidate));
 }
 
+function getPdfFontStyles() {
+  if (cachedFontStyles) {
+    return cachedFontStyles;
+  }
+
+  const fontsRoot = path.join(process.cwd(), "public", "fonts", "noto-sans-sc");
+  const cssPath = path.join(fontsRoot, "pdf.css");
+  const css = readFileSync(cssPath, "utf8");
+
+  cachedFontStyles = css.replace(
+    /url\(\/fonts\/noto-sans-sc\/files\/([^)]+\.woff)\)/g,
+    (_match, fileName: string) => {
+      const fontPath = path.join(fontsRoot, "files", fileName);
+      const fontBase64 = readFileSync(fontPath).toString("base64");
+
+      return `url(data:font/woff;base64,${fontBase64})`;
+    },
+  );
+
+  return cachedFontStyles;
+}
+
 async function streamToString(stream: ReadableStream<Uint8Array>) {
   const response = new Response(stream);
 
@@ -128,7 +152,7 @@ const pdfStyles = `
     margin: 0;
     background: #ffffff;
     color: #020617;
-    font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC", "SimSun", Arial, sans-serif;
+    font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", "SimSun", Arial, sans-serif;
   }
 
   .pdf-page {
