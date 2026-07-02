@@ -310,4 +310,272 @@ const pdfStyles = `
     break-inside: avoid;
     page-break-inside: avoid;
   }
+
+  .modern-template {
+    min-height: 0;
+    background: #ffffff;
+    color: #0f172a;
+    padding: 0;
+  }
+
+  .modern-shell {
+    display: grid;
+    grid-template-columns: 32% 68%;
+    min-height: 960px;
+    background: #ffffff;
+  }
+
+  .modern-sidebar {
+    position: relative;
+    background: #0f2f45;
+    color: #ffffff;
+    padding: 34px 24px;
+  }
+
+  .modern-sidebar-mark {
+    width: 38px;
+    height: 4px;
+    background: #7dd3fc;
+    margin-bottom: 26px;
+  }
+
+  .modern-kicker {
+    color: #bae6fd;
+    font-size: 10px;
+    letter-spacing: 0;
+  }
+
+  .modern-name {
+    margin-top: 10px;
+    color: #ffffff;
+    font-size: 30px;
+    line-height: 1.15;
+    font-weight: 700;
+  }
+
+  .modern-role {
+    margin-top: 8px;
+    color: #dbeafe;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+
+  .modern-side-section {
+    margin-top: 32px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .modern-side-title {
+    color: #bae6fd;
+    font-size: 12px;
+    line-height: 1.4;
+    font-weight: 700;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(186, 230, 253, 0.35);
+  }
+
+  .modern-contact-list,
+  .modern-education-list {
+    margin-top: 14px;
+  }
+
+  .modern-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    color: #f8fafc;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  .modern-contact-item + .modern-contact-item {
+    margin-top: 8px;
+  }
+
+  .modern-contact-icon {
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: rgba(125, 211, 252, 0.18);
+    color: #bae6fd;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+
+  .modern-skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .modern-skill-pill {
+    display: inline-flex;
+    border: 1px solid rgba(186, 230, 253, 0.4);
+    color: #f8fafc;
+    padding: 5px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  .modern-side-entry {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .modern-side-entry + .modern-side-entry {
+    margin-top: 16px;
+  }
+
+  .modern-side-entry h3 {
+    color: #ffffff;
+    font-size: 12px;
+    line-height: 1.45;
+    font-weight: 700;
+  }
+
+  .modern-side-entry p {
+    margin-top: 4px;
+    color: #dbeafe;
+    font-size: 10px;
+    line-height: 1.55;
+  }
+
+  .modern-side-entry span {
+    display: block;
+    margin-top: 4px;
+    color: #bae6fd;
+    font-size: 10px;
+    line-height: 1.5;
+  }
+
+  .modern-side-description {
+    color: #e0f2fe;
+  }
+
+  .modern-main {
+    padding: 38px 36px;
+  }
+
+  .modern-profile-section {
+    display: grid;
+    grid-template-columns: 132px minmax(0, 1fr);
+    gap: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #dbeafe;
+  }
+
+  .modern-section-eyebrow {
+    color: #0ea5e9;
+    font-size: 10px;
+    line-height: 1.4;
+    font-weight: 700;
+  }
+
+  .modern-section-title {
+    margin-top: 6px;
+    color: #0f172a;
+    font-size: 18px;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+
+  .modern-summary {
+    color: #334155;
+    font-size: 12px;
+    line-height: 1.85;
+    white-space: pre-wrap;
+  }
+
+  .modern-section {
+    margin-top: 28px;
+  }
+
+  .modern-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .modern-section-heading span {
+    width: 20px;
+    height: 3px;
+    background: #0ea5e9;
+  }
+
+  .modern-section-heading h2 {
+    color: #0f172a;
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 700;
+  }
+
+  .modern-timeline {
+    border-left: 1px solid #bfdbfe;
+    padding-left: 18px;
+  }
+
+  .modern-timeline-entry {
+    position: relative;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .modern-timeline-entry + .modern-timeline-entry {
+    margin-top: 22px;
+  }
+
+  .modern-timeline-dot {
+    position: absolute;
+    left: -23px;
+    top: 4px;
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: #0ea5e9;
+    box-shadow: 0 0 0 4px #e0f2fe;
+  }
+
+  .modern-entry-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+  }
+
+  .modern-entry-header h3 {
+    color: #0f172a;
+    font-size: 14px;
+    line-height: 1.45;
+    font-weight: 700;
+  }
+
+  .modern-entry-header p {
+    margin-top: 3px;
+    color: #0369a1;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 700;
+  }
+
+  .modern-entry-header span {
+    flex-shrink: 0;
+    color: #64748b;
+    font-size: 10px;
+    line-height: 1.5;
+  }
+
+  .modern-entry-description {
+    margin-top: 10px;
+    color: #334155;
+    font-size: 12px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+  }
 `;
